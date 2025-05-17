@@ -1,0 +1,146 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 原有代码保持不变 -->
+
+  <!-- 房产金额输入 -->
+  <view class="form-container">
+    <text class="section-title">房产交易金额</text>
+    
+    <view class="form-item">
+      <text class="label">合同房产金额(元)</text>
+      <input type="number" placeholder="请输入金额" bindinput="onInputAmount"/>
+    </view>
+
+    <!-- 税率和承担方组合配置 -->
+    <view class="form-item">
+      <text class="section-title">税费配置</text>
+      
+      <view class="tax-row">
+        <view class="tax-rate">
+          <text class="label">增值税率(%)</text>
+          <input type="number" value="{{taxRates.vat*100}}" placeholder="5%" bindinput="onVatRateChange"/>
+        </view>
+        <view class="tax-payer">
+          <text class="label">承担方</text>
+          <picker bindchange="onVatPayerChange" value="{{taxPayers.vat}}" range="{{payerOptions}}">
+            <view class="picker">{{payerOptions[taxPayers.vat]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="tax-row">
+        <view class="tax-rate">
+          <text class="label">个税率(%)</text>
+          <input type="number" value="{{taxRates.incomeTax*100}}" placeholder="1%" bindinput="onIncomeTaxRateChange"/>
+        </view>
+        <view class="tax-payer">
+          <text class="label">承担方</text>
+          <picker bindchange="onIncomeTaxPayerChange" value="{{taxPayers.incomeTax}}" range="{{payerOptions}}">
+            <view class="picker">{{payerOptions[taxPayers.incomeTax]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="tax-row">
+        <view class="tax-rate">
+          <text class="label">契税率(%)</text>
+          <input type="number" value="{{taxRates.deedTax*100}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
+        </view>
+        <view class="tax-payer">
+          <text class="label">承担方</text>
+          <picker bindchange="onDeedTaxPayerChange" value="{{taxPayers.deedTax}}" range="{{payerOptions}}">
+            <view class="picker">{{payerOptions[taxPayers.deedTax]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="tax-row">
+        <view class="tax-rate">
+          <text class="label">买方中介费率(%)</text>
+          <input type="number" value="{{taxRates.buyerAgentFee*100}}" placeholder="1%" bindinput="onBuyerAgentFeeRateChange"/>
+        </view>
+        <view class="tax-payer">
+          <text class="label">承担方</text>
+          <picker bindchange="onBuyerAgentFeePayerChange" value="{{taxPayers.buyerAgentFee}}" range="{{payerOptions}}">
+            <view class="picker">{{payerOptions[taxPayers.buyerAgentFee]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="tax-row">
+        <view class="tax-rate">
+          <text class="label">卖方中介费率(%)</text>
+          <input type="number" value="{{taxRates.sellerAgentFee*100}}" placeholder="1%" bindinput="onSellerAgentFeeRateChange"/>
+        </view>
+        <view class="tax-payer">
+          <text class="label">承担方</text>
+          <picker bindchange="onSellerAgentFeePayerChange" value="{{taxPayers.sellerAgentFee}}" range="{{payerOptions}}">
+            <view class="picker">{{payerOptions[taxPayers.sellerAgentFee]}}</view>
+          </picker>
+        </view>
+      </view>
+    <button class="calculate-btn" bindtap="calculate">计算费用</button>
+    </view>
+  
+    <!-- 结果展示 -->
+    <view class="result-container" wx:if="{{showResult}}">
+    <!-- 卖方税费明细 -->
+    <view class="result-section">
+      <text class="section-title">卖方税费明细</text>
+      <view class="result-item" wx:if="{{taxPayers.vat === 0}}">
+        <text class="result-label">增值税：</text>
+        <text class="result-value">{{sellerTaxes.vat}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.incomeTax === 0}}">
+        <text class="result-label">个人所得税：</text>
+        <text class="result-value">{{sellerTaxes.incomeTax}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.deedTax === 0}}">
+        <text class="result-label">契税：</text>
+        <text class="result-value">{{sellerTaxes.deedTax}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.sellerAgentFee === 0}}">
+        <text class="result-label">卖方中介费：</text>
+        <text class="result-value">{{sellerTaxes.agentFee}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.buyerAgentFee === 0}}">
+        <text class="result-label">买方中介费：</text>
+        <text class="result-value">{{taxes.buyerAgentFee}}元</text>
+      </view>
+      <view class="result-item text-bold">
+        <text class="result-label">卖方净收入：</text>
+        <text class="result-value">{{sellerNetAmount}}元</text>
+      </view>
+    </view>
+    
+    <!-- 买方税费明细 -->
+    <view class="result-section">
+      <text class="section-title">买方税费明细</text>
+      <view class="result-item" wx:if="{{taxPayers.vat === 1}}">
+        <text class="result-label">增值税：</text>
+        <text class="result-value">{{buyerTaxes.vat}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.incomeTax === 1}}">
+        <text class="result-label">个人所得税：</text>
+        <text class="result-value">{{buyerTaxes.incomeTax}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.deedTax === 1}}">
+        <text class="result-label">契税：</text>
+        <text class="result-value">{{buyerTaxes.deedTax}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.sellerAgentFee === 1}}">
+        <text class="result-label">卖方中介费：</text>
+        <text class="result-value">{{taxes.sellerAgentFee}}元</text>
+      </view>
+      <view class="result-item" wx:if="{{taxPayers.buyerAgentFee === 1}}">
+        <text class="result-label">买方中介费：</text>
+        <text class="result-value">{{buyerTaxes.agentFee}}元</text>
+      </view>
+      <view class="result-item text-bold">
+        <text class="result-label">买方总支出：</text>
+        <text class="result-value">{{buyerTotalCost}}元</text>
+      </view>
+    </view>
+    </view>
+  </view>
+</view>
