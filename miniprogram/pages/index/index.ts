@@ -1,24 +1,31 @@
 // index.ts
 const app = getApp<IAppOption>()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const defaultRates = {
+  vat: '5',       // 增值税5%
+  incomeTax: '1', // 个税1%
+  deedTax: '3',   // 契税3%
+  buyerAgentFee: '1', // 买方中介费1%
+  sellerAgentFee: '1'  // 卖方中介费1%
+}
+
+const defaultPayers = {
+  vat: 0,       // 0-卖方承担
+  incomeTax: 0, // 0-卖方承担  
+  deedTax: 1    // 1-买方承担
+}
 
 class TaxService {
-  static defaultRates = {
-    vat: 0.05,       // 增值税5%
-    incomeTax: 0.01, // 个税1%
-    deedTax: 0.03,   // 契税3%
-    buyerAgentFee: 0.01, // 买方中介费1%
-    sellerAgentFee: 0.01  // 卖方中介费1%
-  }
-
-  static defaultPayers = {
-    vat: 0,       // 0-卖方承担
-    incomeTax: 0, // 0-卖方承担  
-    deedTax: 1    // 1-买方承担
-  }
-
-  calculate(contractPrice: number, taxPayers: {vat: number, incomeTax: number, deedTax: number, buyerAgentFee: number, sellerAgentFee: number}, taxRates?: {vat: number, incomeTax: number, deedTax: number, buyerAgentFee: number, sellerAgentFee: number}) {
-    const rates = taxRates || TaxService.defaultRates
+ 
+  calculate(contractPrice: number, taxPayers: {vat: number, incomeTax: number, deedTax: number, buyerAgentFee: number, sellerAgentFee: number}, taxRates?: {vat: string, incomeTax: string, deedTax: string, buyerAgentFee: string, sellerAgentFee: string}) {
+    const rateString = taxRates || defaultRates
+    const rates = {
+      vat :  this.toFloat(rateString.vat)/100,
+      incomeTax: this.toFloat(rateString.incomeTax)/100,
+      deedTax: this.toFloat(rateString.deedTax)/100,
+      buyerAgentFee: this.toFloat(rateString.buyerAgentFee)/100,
+      sellerAgentFee : this.toFloat(rateString.sellerAgentFee)/100,
+    }
     const { vat, incomeTax, deedTax, buyerAgentFee, sellerAgentFee } = rates
 
     // 计算各项税费
@@ -35,14 +42,16 @@ class TaxService {
       vat: taxPayers.vat === 0 ? taxes.vat : 0,
       incomeTax: taxPayers.incomeTax === 0 ? taxes.incomeTax : 0,
       deedTax: taxPayers.deedTax === 0 ? taxes.deedTax : 0,
-      agentFee: taxPayers.sellerAgentFee === 0 ? taxes.sellerAgentFee : 0
+      agentFee: (taxPayers.sellerAgentFee === 0 ? taxes.sellerAgentFee : 0)
+                + (taxPayers.buyerAgentFee === 0 ? taxes.buyerAgentFee : 0)
     }
 
     const buyerTaxes = {
       vat: taxPayers.vat === 1 ? taxes.vat : 0,
       incomeTax: taxPayers.incomeTax === 1 ? taxes.incomeTax : 0,
       deedTax: taxPayers.deedTax === 1 ? taxes.deedTax : 0,
-      agentFee: taxPayers.buyerAgentFee === 1 ? taxes.buyerAgentFee : 0
+      agentFee: (taxPayers.buyerAgentFee === 1 ? taxes.buyerAgentFee : 0) 
+              + (taxPayers.sellerAgentFee === 1 ? taxes.sellerAgentFee : 0)
     }
     console.log("buyerTaxes", buyerTaxes, "sellerTaxes", sellerTaxes)
     // 计算净收入/总支出
@@ -64,6 +73,14 @@ class TaxService {
   round(value: number) {
     return Math.round(value * 100) / 100
   }
+
+  toFloat(value : string) {
+    const f = parseFloat(value);
+    if (isNaN(f)) {
+      return 0;
+    }
+    return f;
+  }
 }
 
 Component({
@@ -71,11 +88,11 @@ Component({
     contractAmount: 0,
     showResult: false,
     taxRates: {
-      vat: 0.05,       // 增值税5%
-      incomeTax: 0.01, // 个税1%
-      deedTax: 0.03,   // 契税3%
-      buyerAgentFee: 0.01, // 买方中介费1%
-      sellerAgentFee: 0.01  // 卖方中介费1%
+      vat: '5',       // 增值税5%
+      incomeTax: '1', // 个税1%
+      deedTax: '3',   // 契税3%
+      buyerAgentFee: '1', // 买方中介费1%
+      sellerAgentFee: '1'  // 卖方中介费1%
     },
     taxPayers: {
       vat: 0,       // 0-卖方承担
@@ -130,63 +147,30 @@ Component({
     // 税率变化事件
     onVatRateChange(e: any) {
       const value = e.detail.value;
-      if (value === '') {
-        this.setData({'taxRates.vat': 0.05});
-      } else {
-        const num = parseFloat(value) || 0;
-        this.setData({
-          'taxRates.vat': parseFloat((num / 100).toFixed(4))
-        });
-      }
+      this.setData({
+        'taxRates.vat': value
+      });
     },
 
     onIncomeTaxRateChange(e: any) {
       const value = e.detail.value;
-      if (value === '') {
-        this.setData({'taxRates.incomeTax': 0.01});
-      } else {
-        const num = parseFloat(value) || 0;
-        this.setData({
-          'taxRates.incomeTax': parseFloat((num / 100).toFixed(4))
-        });
-      }
+      this.setData({'taxRates.incomeTax': value});
     },
 
     onDeedTaxRateChange(e: any) {
       const value = e.detail.value;
-      if (value === '') {
-        this.setData({'taxRates.deedTax': 0.03});
-      } else {
-        const num = parseFloat(value) || 0;
-        this.setData({
-          'taxRates.deedTax': parseFloat((num / 100).toFixed(4))
-        });
-      }
+      this.setData({'taxRates.deedTax': value});
     },
 
     // 中介费率变化事件
     onBuyerAgentFeeRateChange(e: any) {
       const value = e.detail.value;
-      if (value === '') {
-        this.setData({'taxRates.buyerAgentFee': 0.01});
-      } else {
-        const num = parseFloat(value) || 0;
-        this.setData({
-          'taxRates.buyerAgentFee': parseFloat((num / 100).toFixed(4))
-        });
-      }
+      this.setData({'taxRates.buyerAgentFee': value});
     },
 
     onSellerAgentFeeRateChange(e: any) {
       const value = e.detail.value;
-      if (value === '') {
-        this.setData({'taxRates.sellerAgentFee': 0.01});
-      } else {
-        const num = parseFloat(value) || 0;
-        this.setData({
-          'taxRates.sellerAgentFee': parseFloat((num / 100).toFixed(4))
-        });
-      }
+      this.setData({'taxRates.sellerAgentFee': value});
     },
 
     // 中介费承担方变化事件

@@ -18,7 +18,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">增值税率(%)</text>
-          <input type="number" value="{{taxRates.vat*100}}" placeholder="5%" bindinput="onVatRateChange"/>
+          <input type="number" value="{{taxRates.vat}}" placeholder="5%" bindinput="onVatRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -31,7 +31,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">个税率(%)</text>
-          <input type="number" value="{{taxRates.incomeTax*100}}" placeholder="1%" bindinput="onIncomeTaxRateChange"/>
+          <input type="number" value="{{taxRates.incomeTax}}" placeholder="1%" bindinput="onIncomeTaxRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -44,7 +44,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">契税率(%)</text>
-          <input type="number" value="{{taxRates.deedTax*100}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
+          <input type="number" value="{{taxRates.deedTax}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -57,7 +57,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">买方中介费率(%)</text>
-          <input type="number" value="{{taxRates.buyerAgentFee*100}}" placeholder="1%" bindinput="onBuyerAgentFeeRateChange"/>
+          <input type="number" value="{{taxRates.buyerAgentFee}}" placeholder="1%" bindinput="onBuyerAgentFeeRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -70,7 +70,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">卖方中介费率(%)</text>
-          <input type="number" value="{{taxRates.sellerAgentFee*100}}" placeholder="1%" bindinput="onSellerAgentFeeRateChange"/>
+          <input type="number" value="{{taxRates.sellerAgentFee}}" placeholder="1%" bindinput="onSellerAgentFeeRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -101,7 +101,7 @@
       </view>
       <view class="result-item" wx:if="{{taxPayers.sellerAgentFee === 0}}">
         <text class="result-label">卖方中介费：</text>
-        <text class="result-value">{{sellerTaxes.agentFee}}元</text>
+        <text class="result-value">{{taxes.sellerAgentFee}}元</text>
       </view>
       <view class="result-item" wx:if="{{taxPayers.buyerAgentFee === 0}}">
         <text class="result-label">买方中介费：</text>
@@ -134,7 +134,7 @@
       </view>
       <view class="result-item" wx:if="{{taxPayers.buyerAgentFee === 1}}">
         <text class="result-label">买方中介费：</text>
-        <text class="result-value">{{buyerTaxes.agentFee}}元</text>
+        <text class="result-value">{{taxes.buyerAgentFee}}元</text>
       </view>
       <view class="result-item text-bold">
         <text class="result-label">买方总支出：</text>
