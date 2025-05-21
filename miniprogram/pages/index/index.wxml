@@ -18,7 +18,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">增值税率(%)</text>
-          <input type="number" value="{{taxRates.vat}}" placeholder="5%" bindinput="onVatRateChange"/>
+          <input type="digit" value="{{taxRates.vat}}" placeholder="5%" bindinput="onVatRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -31,7 +31,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">个税率(%)</text>
-          <input type="number" value="{{taxRates.incomeTax}}" placeholder="1%" bindinput="onIncomeTaxRateChange"/>
+          <input type="digit" value="{{taxRates.incomeTax}}" placeholder="1%" bindinput="onIncomeTaxRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -44,7 +44,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">契税率(%)</text>
-          <input type="number" value="{{taxRates.deedTax}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
+          <input type="digit" value="{{taxRates.deedTax}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -57,7 +57,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">买方中介费率(%)</text>
-          <input type="number" value="{{taxRates.buyerAgentFee}}" placeholder="1%" bindinput="onBuyerAgentFeeRateChange"/>
+          <input type="digit" value="{{taxRates.buyerAgentFee}}" placeholder="1%" bindinput="onBuyerAgentFeeRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
@@ -70,7 +70,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">卖方中介费率(%)</text>
-          <input type="number" value="{{taxRates.sellerAgentFee}}" placeholder="1%" bindinput="onSellerAgentFeeRateChange"/>
+          <input type="digit" value="{{taxRates.sellerAgentFee}}" placeholder="1%" bindinput="onSellerAgentFeeRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>
