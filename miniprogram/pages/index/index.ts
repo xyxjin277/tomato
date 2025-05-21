@@ -2,7 +2,7 @@
 const app = getApp<IAppOption>()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 const defaultRates = {
-  vat: '5',       // 增值税5%
+  vat: '5.3',       // 增值税5%
   incomeTax: '1', // 个税1%
   deedTax: '3',   // 契税3%
   buyerAgentFee: '1', // 买方中介费1%
@@ -33,8 +33,8 @@ class TaxService {
       vat: contractPrice * vat,
       incomeTax: contractPrice * incomeTax,
       deedTax: contractPrice * deedTax,
-      buyerAgentFee: contractPrice * buyerAgentFee, // 买方中介费
-      sellerAgentFee: contractPrice * sellerAgentFee // 卖方中介费
+      buyerAgentFee: contractPrice > 1000000 ? contractPrice * buyerAgentFee + 5000 : contractPrice * buyerAgentFee, // 买方中介费
+      sellerAgentFee: contractPrice > 1000000 ? contractPrice * buyerAgentFee + 5000 : contractPrice * buyerAgentFee // 卖方中介费
     }
     console.log(taxPayers)
     // 分配税费
@@ -88,7 +88,7 @@ Component({
     contractAmount: 0,
     showResult: false,
     taxRates: {
-      vat: '5',       // 增值税5%
+      vat: '5.3',       // 增值税5%
       incomeTax: '1', // 个税1%
       deedTax: '3',   // 契税3%
       buyerAgentFee: '1', // 买方中介费1%
