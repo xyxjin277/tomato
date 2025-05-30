@@ -5,7 +5,7 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "番茄计算器",
     "navigationBarBackgroundColor": "#ffffff"
   },
   "style": "v2",

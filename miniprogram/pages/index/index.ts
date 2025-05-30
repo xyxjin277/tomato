@@ -33,8 +33,8 @@ class TaxService {
       vat: contractPrice * vat,
       incomeTax: contractPrice * incomeTax,
       deedTax: contractPrice * deedTax,
-      buyerAgentFee: contractPrice > 1000000 ? contractPrice * buyerAgentFee + 5000 : contractPrice * buyerAgentFee, // 买方中介费
-      sellerAgentFee: contractPrice > 1000000 ? contractPrice * buyerAgentFee + 5000 : contractPrice * buyerAgentFee // 卖方中介费
+      buyerAgentFee: contractPrice * buyerAgentFee, // 买方中介费
+      sellerAgentFee: contractPrice * buyerAgentFee // 卖方中介费
     }
     console.log(taxPayers)
     // 分配税费
