@@ -1,0 +1,87 @@
+<!--index.wxml-->
+<wxs src="../../utils/format.wxs" module="format" />
+<view class="container">
+  <!-- 房产投资计算器 -->
+  <view class="form-container">
+    <text class="section-title">房产投资计算器</text>
+    
+    <view class="form-item">
+      <text class="label">合同金额(元)</text>
+      <input type="number" placeholder="请输入金额" 
+             bindinput="onContractAmountChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">契税税率(%)</text>
+      <input type="digit" placeholder="1%" 
+             value="{{taxRate}}"
+             bindinput="onTaxRateChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">首付比例(%)</text>
+      <input type="digit" placeholder="30%" 
+             value="{{downPaymentRatio}}"
+             bindinput="onDownPaymentRatioChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">资金利率(%)</text>
+      <input type="digit" placeholder="5%" 
+             value="{{fundRate}}"
+             bindinput="onFundRateChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">贷款利率(%)</text>
+      <input type="digit" placeholder="6%" 
+             value="{{loanRate}}"
+             bindinput="onLoanRateChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">持有年限(年)</text>
+      <input type="number" placeholder="1" 
+             bindinput="onHoldingYearsChange"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">持有收益(元)</text>
+      <input type="number" placeholder="0" 
+             bindinput="onHoldingIncomeChange"/>
+    </view>
+
+    <button  bindtap="calculate" class="calculate-btn">计算</button>
+  </view>
+
+  <!-- 结果展示 -->
+  <view class="result-container" style="display:{{showResult ? 'block' : 'none'}}">
+    <view class="result-section">
+      <text class="section-title">计算结果</text>
+      <view class="result-item">
+        <text class="result-label">已缴契税：</text>
+        <text class="result-value" id="paidTax">{{format.formatCurrency(paidTax)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">首付金额：</text>
+        <text class="result-value" id="downPayment">{{format.formatCurrency(downPayment)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">资金成本：</text>
+        <text class="result-value" id="fundCost">{{format.formatCurrency(fundCost)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">总利息：</text>
+        <text class="result-value" id="totalInterest">{{format.formatCurrency(totalInterest)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">持有收益：</text>
+        <text class="result-value" id="totalHoldingIncome">{{format.formatCurrency(totalHoldingIncome)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">总成本：</text>
+        <text class="result-value" id="totalCost">{{format.formatCurrency(totalCost)}}</text>
+      </view>
+    </view>
+  </view>
+</view>

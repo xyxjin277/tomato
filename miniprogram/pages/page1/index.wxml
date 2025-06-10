@@ -79,7 +79,7 @@
           </picker>
         </view>
       </view>
-    <button class="calculate-btn" bindtap="calculate">计算费用</button>
+    <button class="calculate-btn" bindtap="calculate">计算</button>
     </view>
   
     <!-- 结果展示 -->

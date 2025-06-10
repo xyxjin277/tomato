@@ -1,0 +1,8 @@
+function formatCurrency(value) {
+  if (value === null || value === undefined) return '0.00元';
+  return value.toFixed(2) + '元';
+}
+
+module.exports = {
+  formatCurrency: formatCurrency
+};

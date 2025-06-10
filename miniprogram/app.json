@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/page1/index",
+    "pages/page2/index",
     "pages/logs/logs"
   ],
   "window": {
@@ -8,7 +9,20 @@
     "navigationBarTitleText": "番茄计算器",
     "navigationBarBackgroundColor": "#ffffff"
   },
+  "tabBar": {
+    "position": "top",
+    "list": [
+      {
+        "pagePath": "pages/page1/index",
+        "text": "费用计算"
+      },
+      {
+        "pagePath": "pages/page2/index",
+        "text": "持有成本"
+      }
+    ]
+  },
   "style": "v2",
-  "componentFramework": "glass-easel",
+  "componentFramework": "glass-easel", 
   "lazyCodeLoading": "requiredComponents"
 }
