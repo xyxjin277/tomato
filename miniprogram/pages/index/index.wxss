@@ -12,18 +12,21 @@ page {
   box-shadow: none;
   margin-bottom: 0;
   width: 100%;
+  margin-top: 0rpx;
 }
 
 .section-title {
   font-size: 36rpx;
   font-weight: 600;
   color: #333;
+  padding: 32rpx;
   margin-bottom: 24rpx;
   display: block;
 }
 
 .form-item {
-  margin-bottom: 24rpx;
+  margin-bottom: 0rpx;
+  padding: 32rpx;
 }
 
 /* 复合表单项 - 税率和承担方组合 */
@@ -31,6 +34,7 @@ page {
   display: flex;
   align-items: center;
   margin-bottom: 20rpx;
+  padding: 32rpx;
 }
 
 .tax-rate {
@@ -39,7 +43,7 @@ page {
 }
 
 .tax-payer {
-  flex: 3;
+  flex: 2;
 }
 
 .label {
