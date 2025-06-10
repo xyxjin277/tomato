@@ -15,7 +15,7 @@ class InvestmentService {
     const loanAmount = contractAmount * (1 - downPaymentRatio);
     const paidTax = contractAmount * taxRate;
     const downPayment = contractAmount * downPaymentRatio;
-    const fundCost = downPayment * fundRate;
+    const fundCost = downPayment * fundRate * holdingYears;
     const totalInterest = loanAmount * loanRate * holdingYears;
     const totalHoldingIncome = holdingIncome * holdingYears;
     const totalCost = paidTax + downPayment + fundCost + totalInterest - totalHoldingIncome;
