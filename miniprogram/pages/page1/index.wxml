@@ -44,7 +44,7 @@
       <view class="tax-row">
         <view class="tax-rate">
           <text class="label">契税率(%)</text>
-          <input type="digit" value="{{taxRates.deedTax}}" placeholder="3%" bindinput="onDeedTaxRateChange"/>
+          <input type="digit" value="{{taxRates.deedTax}}" placeholder="1%" bindinput="onDeedTaxRateChange"/>
         </view>
         <view class="tax-payer">
           <text class="label">承担方</text>

@@ -156,3 +156,11 @@ input:focus {
 #totalCost {
   color: #07c160;
 }
+
+.holding-cost-green {
+  color: #07c160;
+}
+
+.breakeven-line-red {
+  color: #e64340;
+}

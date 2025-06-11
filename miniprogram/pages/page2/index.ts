@@ -37,22 +37,24 @@ Component({
       console.log('Component attached with initial data:', this.data);
     }
   },
-  data: {
-    contractAmount: 0,      // 合同金额
-    taxRate: '1',          // 契税税率(%)
-    downPaymentRatio: '30',  // 首付比例(%)
-    fundRate: '5',         // 资金利率(%)
-    loanRate: '3.5',         // 贷款利率(%)
-    holdingYears: 1,        // 持有年限
-    holdingIncome: 0,       // 持有收益
-    
-    paidTax: null as number | null,          // 已缴契税
-    downPayment: null as number | null,      // 首付金额
-    fundCost: null as number | null,         // 资金成本
-    totalInterest: null as number | null,    // 总利息
-    totalHoldingIncome: null as number | null, // 持有收益
-    totalCost: null as number | null,        // 总成本
-    showResult: false
+    data: {
+      contractAmount: 0,      // 合同金额
+      taxRate: '1',          // 契税税率(%)
+      downPaymentRatio: '30',  // 首付比例(%)
+      fundRate: '2',         // 资金利率(%)
+      loanRate: '3',         // 贷款利率(%)
+      holdingYears: 1,        // 持有年限
+      holdingIncome: 0,       // 持有收益
+      
+      paidTax: null as number | null,          // 已缴契税
+      downPayment: null as number | null,      // 首付金额
+      fundCost: null as number | null,         // 资金成本
+      totalInterest: null as number | null,    // 总利息
+      totalHoldingIncome: null as number | null, // 持有收益
+      totalCost: null as number | null,        // 总成本
+      holdingCost: null as number | null,      // 持有成本
+      breakevenLine: null as number | null,    // 保本线
+      showResult: false
   },
 
   methods: {
@@ -88,7 +90,7 @@ Component({
 
     onHoldingYearsChange(e: any) {
       this.setData({
-        holdingYears: parseInt(e.detail.value) || 1
+        holdingYears: parseFloat(e.detail.value) || 1
       });
     },
 
@@ -161,6 +163,8 @@ Component({
         totalInterest: result.totalInterest,
         totalHoldingIncome: result.totalHoldingIncome,
         totalCost: result.totalCost,
+        holdingCost: result.paidTax + result.fundCost + result.totalInterest - result.totalHoldingIncome,
+        breakevenLine: contractAmount + (result.paidTax + result.fundCost + result.totalInterest - result.totalHoldingIncome),
         showResult: true
       }, () => {
         console.log('UI should show:', {

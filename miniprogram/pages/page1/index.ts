@@ -4,7 +4,7 @@ const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia0
 const defaultRates = {
   vat: '5.3',       // 增值税5%
   incomeTax: '1', // 个税1%
-  deedTax: '3',   // 契税3%
+  deedTax: '1',   // 契税3%
   buyerAgentFee: '1', // 买方中介费1%
   sellerAgentFee: '1'  // 卖方中介费1%
 }
@@ -90,7 +90,7 @@ Component({
     taxRates: {
       vat: '5.3',       // 增值税5%
       incomeTax: '1', // 个税1%
-      deedTax: '3',   // 契税3%
+      deedTax: '1',   // 契税3%
       buyerAgentFee: '1', // 买方中介费1%
       sellerAgentFee: '1'  // 卖方中介费1%
     },

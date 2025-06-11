@@ -27,21 +27,21 @@
 
     <view class="form-item">
       <text class="label">资金利率(%)</text>
-      <input type="digit" placeholder="5%" 
+      <input type="digit" placeholder="2%" 
              value="{{fundRate}}"
              bindinput="onFundRateChange"/>
     </view>
 
     <view class="form-item">
       <text class="label">贷款利率(%)</text>
-      <input type="digit" placeholder="6%" 
+      <input type="digit" placeholder="3%" 
              value="{{loanRate}}"
              bindinput="onLoanRateChange"/>
     </view>
 
     <view class="form-item">
       <text class="label">持有年限(年)</text>
-      <input type="number" placeholder="1" 
+      <input type="digit" placeholder="1" 
              bindinput="onHoldingYearsChange"/>
     </view>
 
@@ -79,8 +79,12 @@
         <text class="result-value" id="totalHoldingIncome">{{format.formatCurrency(totalHoldingIncome)}}</text>
       </view>
       <view class="result-item">
-        <text class="result-label">总成本：</text>
-        <text class="result-value" id="totalCost">{{format.formatCurrency(totalCost)}}</text>
+        <text class="result-label">持有成本：</text>
+        <text class="result-value holding-cost-green" id="holdingCost">{{format.formatCurrency(holdingCost)}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">保本线：</text>
+        <text class="result-value breakeven-line-red" id="breakevenLine">{{format.formatCurrency(breakevenLine)}}</text>
       </view>
     </view>
   </view>
