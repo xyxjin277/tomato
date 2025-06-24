@@ -11,6 +11,11 @@
       <input type="number" placeholder="请输入金额" bindinput="onInputAmount"/>
     </view>
 
+    <view class="form-item">
+      <text class="label">装修计价(元)</text>
+      <input type="number" placeholder="请输入装修金额" bindinput="onDecorationPriceChange"/>
+    </view>
+
     <!-- 税率和承担方组合配置 -->
     <view class="form-item">
       <text class="section-title">税费配置</text>
@@ -135,6 +140,10 @@
       <view class="result-item" wx:if="{{taxPayers.buyerAgentFee === 1}}">
         <text class="result-label">买方中介费：</text>
         <text class="result-value">{{taxes.buyerAgentFee}}元</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">装修计价：</text>
+        <text class="result-value">{{decorationPrice}}元</text>
       </view>
       <view class="result-item text-bold">
         <text class="result-label">买方总支出：</text>

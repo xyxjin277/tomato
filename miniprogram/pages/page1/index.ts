@@ -17,7 +17,7 @@ const defaultPayers = {
 
 class TaxService {
  
-  calculate(contractPrice: number, taxPayers: {vat: number, incomeTax: number, deedTax: number, buyerAgentFee: number, sellerAgentFee: number}, taxRates?: {vat: string, incomeTax: string, deedTax: string, buyerAgentFee: string, sellerAgentFee: string}) {
+  calculate(contractPrice: number, taxPayers: {vat: number, incomeTax: number, deedTax: number, buyerAgentFee: number, sellerAgentFee: number}, taxRates?: {vat: string, incomeTax: string, deedTax: string, buyerAgentFee: string, sellerAgentFee: string}, decorationPrice: number = 0) {
     const rateString = taxRates || defaultRates
     const rates = {
       vat :  this.toFloat(rateString.vat)/100,
@@ -56,7 +56,7 @@ class TaxService {
     console.log("buyerTaxes", buyerTaxes, "sellerTaxes", sellerTaxes)
     // 计算净收入/总支出
     const sellerNetAmount = contractPrice - 
-      sellerTaxes.vat - sellerTaxes.incomeTax - sellerTaxes.deedTax - sellerTaxes.agentFee
+      sellerTaxes.vat - sellerTaxes.incomeTax - sellerTaxes.deedTax - sellerTaxes.agentFee + decorationPrice
 
     const buyerTotalCost = contractPrice + 
       buyerTaxes.vat + buyerTaxes.incomeTax + buyerTaxes.deedTax + buyerTaxes.agentFee
@@ -86,6 +86,7 @@ class TaxService {
 Component({
   data: {
     contractAmount: 0,
+    decorationPrice: 0,
     showResult: false,
     taxRates: {
       vat: '5.3',       // 增值税5%
@@ -122,6 +123,12 @@ Component({
     onInputAmount(e: any) {
       this.setData({
         contractAmount: parseFloat(e.detail.value) || 0
+      })
+    },
+
+    onDecorationPriceChange(e: any) {
+      this.setData({
+        decorationPrice: parseFloat(e.detail.value) || 0
       })
     },
 
@@ -188,14 +195,16 @@ Component({
 
     calculate() {
       const amount = this.data.contractAmount
+      const decorationPrice = this.data.decorationPrice || 0
       if (!amount || amount <= 0) {
         wx.showToast({ title: '请输入有效金额', icon: 'none' })
         return
       }
 
-      const result = new TaxService().calculate(amount, this.data.taxPayers, this.data.taxRates)
+      const result = new TaxService().calculate(amount, this.data.taxPayers, this.data.taxRates, decorationPrice)
       this.setData({
         ...result,
+        buyerTotalCost: result.buyerTotalCost + decorationPrice,
         showResult: true
       })
     }
